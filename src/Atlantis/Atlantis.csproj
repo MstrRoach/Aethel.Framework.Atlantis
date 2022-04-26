@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <Authors>Jesus Antonio Martinez Hernadez</Authors>
+	  <Description>Domain Driven Design Framework for fast developtmen and easy extension</Description>
+	  <Copyright>Copyright J.A. Martinez</Copyright>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <ImplicitUsings>enable</ImplicitUsings>
+	  <Nullable>enable</Nullable>
+	  <PackageId>Aethel.Framework.Atlantis</PackageId>
+	  <Version>1.0.0</Version>
+	  <PackageTags>Domain Driven Design Framework; Modular Monoliths</PackageTags>
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	  <PackageIcon>atlantis.logo.png</PackageIcon>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+	  <NeutralLanguage>en</NeutralLanguage>
+	  <RepositoryType>dll</RepositoryType>
+	  <Summary>Framework para desarrollo enfocado en Domain Driven Design y Arquitectura Hexagonal implementando CQRS para facil uso y extensibilidad</Summary>
+	  <PackageReleaseNotes>Creacion inicial para soporte de comandos y queries a traves de cqrs. Configuracion de cqrs inicial con mediatr, implementacion de un procesador y despachador de eventos de dominio. Consumo de eventos de dominio facil. Encolador de commandos internos y procesador de los mismos</PackageReleaseNotes>
+	  <PackageReadmeFile>readme.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aethel.Extensions.Application" Version="5.0.0" />
+    <PackageReference Include="Aethel.Extensions.Domain" Version="2.0.1" />
+    <PackageReference Include="FluentValidation" Version="10.4.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="10.4.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
+    <PackageReference Include="Quartz" Version="3.4.0" />
+    <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="atlantis.logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  <PackagePath></PackagePath>
+	  <Pack>True</Pack>
+    </None>
+    <None Update="readme.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  <PackagePath></PackagePath>
+	  <Pack>true</Pack>
+    </None>
+  </ItemGroup>
+
+</Project>
