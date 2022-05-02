@@ -8,7 +8,7 @@
 	  <ImplicitUsings>enable</ImplicitUsings>
 	  <Nullable>enable</Nullable>
 	  <PackageId>Aethel.Framework.Atlantis</PackageId>
-	  <Version>1.0.0</Version>
+	  <Version>2.0.0</Version>
 	  <PackageTags>Domain Driven Design Framework; Modular Monoliths</PackageTags>
 	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	  <PackageIcon>atlantis.logo.png</PackageIcon>
@@ -18,12 +18,17 @@
 	  <NeutralLanguage>en</NeutralLanguage>
 	  <RepositoryType>dll</RepositoryType>
 	  <Summary>Framework para desarrollo enfocado en Domain Driven Design y Arquitectura Hexagonal implementando CQRS para facil uso y extensibilidad</Summary>
-	  <PackageReleaseNotes>Creacion inicial para soporte de comandos y queries a traves de cqrs. Configuracion de cqrs inicial con mediatr, implementacion de un procesador y despachador de eventos de dominio. Consumo de eventos de dominio facil. Encolador de commandos internos y procesador de los mismos</PackageReleaseNotes>
+	  <PackageReleaseNotes>Se agrega el consumo de eventos de integracion con un mecanismo que permite ralizar el almacen y el transporte a traves de multiples implementaciones</PackageReleaseNotes>
 	  <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aethel.Extensions.Application" Version="5.0.0" />
+    <Compile Remove="IntegrationEvents\Abstractions\IDispatcher.cs" />
+    <Compile Remove="IntegrationEvents\Processor\IntegrationEventDispatcherProcessor.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aethel.Extensions.Application" Version="5.2.0" />
     <PackageReference Include="Aethel.Extensions.Domain" Version="2.0.1" />
     <PackageReference Include="FluentValidation" Version="10.4.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.4.0" />

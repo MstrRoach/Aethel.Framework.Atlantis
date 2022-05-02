@@ -1,17 +1,25 @@
 ﻿using Aethel.Extensions.Application.Abstractions.Data;
 using Aethel.Extensions.Application.Abstractions.Hosting;
+using Aethel.Extensions.Application.Abstractions.Integration;
 using Aethel.Extensions.Application.Jobs;
 using Aethel.Extensions.Application.Reflection;
 using Aethel.Extensions.Domain;
+using Atlantis.Abstractions;
 using Atlantis.Application;
 using Atlantis.Configuration;
 using Atlantis.DomainEvents;
 using Atlantis.DomainEvents.Abstractions;
 using Atlantis.DomainEvents.Internal;
+using Atlantis.IntegrationEvents.Abstractions;
+using Atlantis.IntegrationEvents.Internal;
+using Atlantis.IntegrationEvents.Processor;
+using Atlantis.Internal;
 using Atlantis.InternalCommands;
 using Atlantis.InternalCommands.Abstractions;
 using Atlantis.InternalCommands.Internal;
+using Atlantis.Processing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Quartz;
 using System.Reflection;
 
@@ -54,6 +62,21 @@ namespace Atlantis
             services.AddSingleton(new TypeManager<IInternalCommand>(options.InternalCommandsAssembly));
             services.AddScoped<InternalCommandProcessing>();
             // La configuracion externa registra el IInternalCommandStorage
+            // Configuracion del procesamiento de eventos
+
+            // Agregamos el registro de consumo
+            services.AddSingleton<IConsumerRegister, DefaultConsumerRegister>();
+            services.AddSingleton<IPublisher, DefaultPublisher>();
+            services.AddSingleton<IMessageSender, DefaultMessageSender>();
+            services.AddSingleton(new TypeManager<IntegrationEvent>(options.IntegrationEventAssembly));
+            // Agregamos los servidores de procesos
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<IProcessingServer, IConsumerRegister>(sp => sp.GetRequiredService<IConsumerRegister>()));
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<IProcessingServer, AtlantisServer>());
+
+            // Agregamos los procesos
+            services.TryAddSingleton<DispatchProcessing>();
+            services.AddScoped<DispatchingReceivedEvents>();
+            services.AddScoped<DispatchingPublishedEvents>();
             return services;
         }
 
@@ -78,6 +101,9 @@ namespace Atlantis
 
             services.Add(startupDescriptor);
             services.AddSingleton<IModuleHost<Module>, ModuleHost<Module>>();
+            services.AddSingleton<AtlantisBootstrapper<Module>>();
+            services.AddHostedService(sp => sp.GetRequiredService<AtlantisBootstrapper<Module>>());
+
             return services;
         }
 

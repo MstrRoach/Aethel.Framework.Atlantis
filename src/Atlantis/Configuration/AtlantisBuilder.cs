@@ -1,5 +1,6 @@
 ﻿using Aethel.Extensions.Application.Abstractions.Data;
 using Atlantis.DomainEvents.Abstractions;
+using Atlantis.IntegrationEvents.Persistence;
 using Atlantis.InternalCommands.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -40,6 +41,18 @@ namespace Atlantis.Configuration
         private bool internalCommandStorageIsConfigured = false;
 
         /// <summary>
+        /// Bandera para saber si se especifico el servicio de almmacenamiento de eventos
+        /// publicados
+        /// </summary>
+        private bool publishedEventStorageIsConfigured = false;
+
+        /// <summary>
+        /// Bandera para saber si se sepecifico el servicio de almmmmmacenamiennto de eventos
+        /// recibidos
+        /// </summary>
+        private bool receivedEventStorageIsConfigured = false;
+
+        /// <summary>
         /// Indica el ensamblado donde se ubican los handlers para
         /// implementar el mediador
         /// </summary>
@@ -56,6 +69,11 @@ namespace Atlantis.Configuration
         /// para buscarlos y tenerlos en cuenta en el procesamiento
         /// </summary>
         public Assembly? InternalCommandsAssembly { get; private set; }
+
+        /// <summary>
+        /// Indica el ensammblado donde estan los eventos de integracion
+        /// </summary>
+        public Assembly? IntegrationEventAssembly { get; private set; }
 
         /// <summary>
         /// Configuraciones obligatorias para que atlantis funcione
@@ -89,6 +107,26 @@ namespace Atlantis.Configuration
         }
 
         /// <summary>
+        /// Especifica  y registra la entidad para almacenar los eventos de integracion publicados
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public void UsePublishedEventsStorage<T>() where T : IPublishedEventsStorage
+        {
+            _services.Add(ServiceDescriptor.Singleton(typeof(IPublishedEventsStorage),typeof(T)));
+            publishedEventStorageIsConfigured = true;
+        }
+
+        /// <summary>
+        /// Especifica y registra la entidad para almacenar los eventos de integracion recibidos
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public void UseReceivedEventStorage<T>() where T : IReceivedEventsStorage
+        {
+            _services.Add(ServiceDescriptor.Singleton(typeof(IReceivedEventsStorage), typeof(T)));
+            receivedEventStorageIsConfigured = true;
+        }
+
+        /// <summary>
         /// Registra la entidad utilizada para almacenar los comandos internos
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -117,12 +155,30 @@ namespace Atlantis.Configuration
         }
 
         /// <summary>
+        /// Registra las configuraciones para la integracion de eventos
+        /// </summary>
+        /// <param name="action"></param>
+        public void ConfigureIntegration(Action<IntegrationOptions> action)
+        {
+            _services.Configure<IntegrationOptions>(action);
+        }
+
+        /// <summary>
         /// Indica el ensammblado donde buscar los commandos internos
         /// </summary>
         /// <param name="assembly"></param>
         public void SetInternalCommandLocation(Assembly assembly)
         {
             this.InternalCommandsAssembly = assembly;
+        }
+
+        /// <summary>
+        /// Indica cual es el ensamblado donde se buscan los eventos de integracion
+        /// </summary>
+        /// <param name="assembly"></param>
+        public void SetIntegrationEventLocation(Assembly assembly)
+        {
+            this.IntegrationEventAssembly = assembly;
         }
 
         /// <summary>
@@ -138,6 +194,10 @@ namespace Atlantis.Configuration
                 throw new InvalidOperationException("Event storage must be defined");
             if (!internalCommandStorageIsConfigured)
                 throw new InvalidOperationException("Internal command storage must be defined");
+            if (!publishedEventStorageIsConfigured)
+                throw new InvalidOperationException("Published event storage must be defined");
+            if (!receivedEventStorageIsConfigured)
+                throw new InvalidOperationException("Received event storage must be defined");
             if (HandlersAssembly is null)
                 throw new InvalidOperationException("Handlers assembly must be specified");
             if (DomainEventsAssembly is null)

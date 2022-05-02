@@ -11,7 +11,7 @@ namespace Atlantis.Application
         /// <summary>
         /// Contiene todos los servicios disponibles en el modulo
         /// </summary>
-        protected IServiceProvider ServiceProvider { get; set; }
+        internal IServiceProvider ServiceProvider { get; set; }
 
         /// <summary>
         /// Constructor para la inyeccion de dependencias
@@ -78,6 +78,15 @@ namespace Atlantis.Application
                 return;
             }
             await action.Execute();
+        }
+
+        /// <summary>
+        /// Devuelve los servicios del modulo
+        /// </summary>
+        /// <returns></returns>
+        public IServiceProvider GetServiceProvider()
+        {
+            return ServiceProvider;
         }
     }
 }
