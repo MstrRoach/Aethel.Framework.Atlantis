@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlantis", "Atlantis\Atlantis.csproj", "{AC557CD3-1506-49B9-996B-BF74BF9A5E88}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlantis.Transport.Redis", "Atlantis.Redis\Atlantis.Transport.Redis.csproj", "{C019E3AE-680D-4F44-9A72-542E8425116E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{AC557CD3-1506-49B9-996B-BF74BF9A5E88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC557CD3-1506-49B9-996B-BF74BF9A5E88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC557CD3-1506-49B9-996B-BF74BF9A5E88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C019E3AE-680D-4F44-9A72-542E8425116E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C019E3AE-680D-4F44-9A72-542E8425116E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C019E3AE-680D-4F44-9A72-542E8425116E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C019E3AE-680D-4F44-9A72-542E8425116E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
