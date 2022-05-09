@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlantis", "Atlantis\Atlant
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlantis.Transport.Redis", "Atlantis.Redis\Atlantis.Transport.Redis.csproj", "{C019E3AE-680D-4F44-9A72-542E8425116E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Altantis.Console", "Altantis.Console\Altantis.Console.csproj", "{51D755B9-F528-4A72-A469-25DE47DFEC0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aethel.Structure.ExplicitFlow", "Aethel.Structure.ExplicitFlow\Aethel.Structure.ExplicitFlow.csproj", "{3F74B19B-E51A-4C81-832F-ADAF26FCDF6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{C019E3AE-680D-4F44-9A72-542E8425116E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C019E3AE-680D-4F44-9A72-542E8425116E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C019E3AE-680D-4F44-9A72-542E8425116E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51D755B9-F528-4A72-A469-25DE47DFEC0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51D755B9-F528-4A72-A469-25DE47DFEC0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51D755B9-F528-4A72-A469-25DE47DFEC0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51D755B9-F528-4A72-A469-25DE47DFEC0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F74B19B-E51A-4C81-832F-ADAF26FCDF6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F74B19B-E51A-4C81-832F-ADAF26FCDF6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F74B19B-E51A-4C81-832F-ADAF26FCDF6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F74B19B-E51A-4C81-832F-ADAF26FCDF6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
