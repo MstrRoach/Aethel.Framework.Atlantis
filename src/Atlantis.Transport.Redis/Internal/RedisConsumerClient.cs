@@ -84,8 +84,6 @@ namespace Aethel.Redis.Internal
         public void Listening(TimeSpan timeout, CancellationToken cancellationToken)
         {
             _ = ListeningForMessagesAsync(timeout, cancellationToken);
-
-            throw new NotImplementedException();
         }
 
         /// <summary>
