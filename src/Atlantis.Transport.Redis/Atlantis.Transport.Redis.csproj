@@ -8,7 +8,7 @@
 	  <ImplicitUsings>enable</ImplicitUsings>
 	  <Nullable>enable</Nullable>
 	  <PackageId>Atlantis.Transport.Redis</PackageId>
-	  <Version>1.0.1</Version>
+	  <Version>1.0.2</Version>
 	  <PackageTags>Domain Driven Design Framework; Modular Monoliths; Atlantis extensions; Event bus</PackageTags>
 	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	  <PackageIcon>atlantis.logo.png</PackageIcon>
@@ -18,7 +18,7 @@
 	  <NeutralLanguage>en</NeutralLanguage>
 	  <RepositoryType>dll</RepositoryType>
 	  <Summary>Libreria de extension que implementa la capa de transporte para utilizarse dentro de atlantis</Summary>
-	  <PackageReleaseNotes>Fix: Removiendo una excepcion de no implementacion en el listening del bus de redis</PackageReleaseNotes>
+	  <PackageReleaseNotes>Actualizando la referencia al framework principal</PackageReleaseNotes>
 	  <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
 
