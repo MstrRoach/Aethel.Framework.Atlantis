@@ -1,5 +1,6 @@
 ﻿using Aethel.Extensions.Application.Reflection;
 using Atlantis.InternalCommands.Abstractions;
+using Atlantis.PolicyProcessing.Abstractions;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -15,7 +16,7 @@ namespace Atlantis.InternalCommands.Internal
     {
         private readonly IServiceProvider _provider;
         private readonly IInternalCommandStorage _storage;
-        private readonly TypeManager<IInternalCommand> _resolver;
+        private readonly TypeManager<IReaction> _resolver;
 
         /// <summary>
         /// 
@@ -24,7 +25,7 @@ namespace Atlantis.InternalCommands.Internal
         /// <param name="storage"></param>
         /// <param name="resolver"></param>
         public InternalCommandProcessor(IServiceProvider provider, IInternalCommandStorage storage, 
-            TypeManager<IInternalCommand> resolver)
+            TypeManager<IReaction> resolver)
         {
             _provider = provider;
             _storage = storage;

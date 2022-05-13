@@ -17,6 +17,8 @@ using Atlantis.Internal;
 using Atlantis.InternalCommands;
 using Atlantis.InternalCommands.Abstractions;
 using Atlantis.InternalCommands.Internal;
+using Atlantis.PolicyProcessing;
+using Atlantis.PolicyProcessing.Abstractions;
 using Atlantis.Processing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -55,11 +57,12 @@ namespace Atlantis
             services.AddScoped<IDomainEventProcessor, DomainEventProcessor>();
             services.AddSingleton(new TypeManager<IDomainEvent>(options.DomainEventsAssembly));
             services.AddScoped<DomainEventProcessing>();
+            services.AddPolicyProcessing(options.DomainEventsAssembly);
             // La configuracion externa registra el IDomainEventLogStorage
             // Configuramos el procesador de eventos internos
             services.AddScoped<IInternalCommandScheduler, InternalCommandScheduler>();
             services.AddScoped<IInternalCommandProcessor, InternalCommandProcessor>();
-            services.AddSingleton(new TypeManager<IInternalCommand>(options.InternalCommandsAssembly));
+            services.AddSingleton(new TypeManager<IReaction>(options.InternalCommandsAssembly));
             services.AddScoped<InternalCommandProcessing>();
             // La configuracion externa registra el IInternalCommandStorage
             // Configuracion del procesamiento de eventos

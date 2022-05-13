@@ -1,6 +1,7 @@
 ﻿using Aethel.Extensions.Application.Abstractions.Data;
 using Aethel.Extensions.Application.Abstractions.Mediator;
 using Atlantis.DomainEvents.Abstractions;
+using Atlantis.PolicyProcessing.Abstractions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -32,15 +33,21 @@ namespace Atlantis.Mediator.Middlewares
         private readonly IDomainEventProcessor _eventDispatcher;
 
         /// <summary>
+        /// Procesador de poliza
+        /// </summary>
+        private readonly ICommandPolicyProcessor<TRequest> _policyProcessor;
+
+        /// <summary>
         /// Constuctor del 
         /// </summary>
         /// <param name="unitWork"></param>
         public Transaction(IUnitWork unitWork, ILogger<Transaction<TRequest, TResponse>> logger,
-            IDomainEventProcessor eventDispatcher)
+            IDomainEventProcessor eventDispatcher,ICommandPolicyProcessor<TRequest> policyProcessor)
         {
             _unitWork = unitWork;
             _logger = logger;
             _eventDispatcher = eventDispatcher;
+            _policyProcessor = policyProcessor;
         }
 
         /// <summary>
@@ -60,7 +67,8 @@ namespace Atlantis.Mediator.Middlewares
                 var result = await next();
                 // Despachamos los eventos
                 _logger.LogInformation("[TRANSACTION] Dispatching events . . .");
-                await _eventDispatcher.DispatchEventsAsync(request.Id);
+                await _policyProcessor.ExecutePolicy(request.Id);
+                // await _eventDispatcher.DispatchEventsAsync(request.Id);
                 // TODO:MstrRoach Agregar aqui el despacho de eventos antes de confirmar
                 // TODO:MstrRoach Agregar aqui el marcado de los commandos internos commo procesados
                 _logger.LogInformation("[TRANSACTION] Request completed successfully. Confirming changes");

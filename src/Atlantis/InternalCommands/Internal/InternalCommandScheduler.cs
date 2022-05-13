@@ -1,6 +1,7 @@
 ﻿using Aethel.Extensions.Application.Abstractions.Mediator;
 using Aethel.Extensions.Application.Serialization;
 using Atlantis.InternalCommands.Abstractions;
+using Atlantis.PolicyProcessing.Abstractions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,27 @@ namespace Atlantis.InternalCommands.Internal
     /// <summary>
     /// Servicio para encolar todos los comandos necesarios y almacenarlos en la base de datos
     /// </summary>
-    internal class InternalCommandScheduler : IInternalCommandScheduler
+    internal class InternalCommandScheduler : IInternalCommandScheduler, IPolicyDispatcher
     {
         private readonly IInternalCommandStorage _storage;
         public InternalCommandScheduler(IInternalCommandStorage storage)
         {
             _storage = storage;
+        }
+
+        /// <summary>
+        /// Agrega una reaccion de poliza a la cola de ejecucion de comandos
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="reaction"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task Dispatch<T>(object reaction)
+        {
+            // Casteamos
+            var command = reaction as IReaction;
+            // Obtenemos el tipo
+            await EnqueueAsync(command);
         }
 
         /// <summary>

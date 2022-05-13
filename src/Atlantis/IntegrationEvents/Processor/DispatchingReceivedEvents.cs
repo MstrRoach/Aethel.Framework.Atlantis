@@ -3,6 +3,7 @@ using Aethel.Extensions.Application.Jobs;
 using Aethel.Extensions.Application.Reflection;
 using Atlantis.IntegrationEvents.Internal;
 using Atlantis.IntegrationEvents.Persistence;
+using Atlantis.PolicyProcessing.Abstractions;
 using MediatR;
 using Newtonsoft.Json;
 using System;
@@ -28,7 +29,7 @@ namespace Atlantis.IntegrationEvents.Processor
         /// <param name="storage"></param>
         /// <param name="mediator"></param>
         /// <param name="resolver"></param>
-        public DispatchingReceivedEvents(IReceivedEventsStorage storage, 
+        public DispatchingReceivedEvents(IReceivedEventsStorage storage, ICommandPolicyProcessor<IntegrationEvent> policyProcessor,
             IMediator mediator, TypeManager<IntegrationEvent> resolver)
         {
             _mediator = mediator;
