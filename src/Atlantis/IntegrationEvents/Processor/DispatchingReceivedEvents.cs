@@ -4,6 +4,7 @@ using Aethel.Extensions.Application.Reflection;
 using Atlantis.IntegrationEvents.Internal;
 using Atlantis.IntegrationEvents.Persistence;
 using Atlantis.PolicyProcessing.Abstractions;
+using Atlantis.PolicyProcessing.Internal;
 using MediatR;
 using Newtonsoft.Json;
 using System;
@@ -20,20 +21,24 @@ namespace Atlantis.IntegrationEvents.Processor
     public class DispatchingReceivedEvents : IProcessingAction
     {
         private readonly IReceivedEventsStorage _storage;
-        private readonly IMediator _mediator;
+        private readonly IPolicyDispatcher _dispatcher;
+        private readonly AbstractPolicyDescriptor<IntegrationEvent> _policyDescriptor;
         private readonly TypeManager<IntegrationEvent> _resolver;
-
+        
         /// <summary>
         /// 
         /// </summary>
         /// <param name="storage"></param>
-        /// <param name="mediator"></param>
+        /// <param name="dispatcher"></param>
+        /// <param name="policyDescriptor"></param>
         /// <param name="resolver"></param>
-        public DispatchingReceivedEvents(IReceivedEventsStorage storage, ICommandPolicyProcessor<IntegrationEvent> policyProcessor,
-            IMediator mediator, TypeManager<IntegrationEvent> resolver)
+        public DispatchingReceivedEvents(IReceivedEventsStorage storage,
+            IPolicyDispatcher dispatcher, AbstractPolicyDescriptor<IntegrationEvent> policyDescriptor,
+            TypeManager<IntegrationEvent> resolver)
         {
-            _mediator = mediator;
             _storage = storage;
+            _dispatcher = dispatcher;
+            _policyDescriptor = policyDescriptor;
             _resolver = resolver;
         }
 
@@ -60,7 +65,8 @@ namespace Atlantis.IntegrationEvents.Processor
 
                 try
                 {
-                    await _mediator.Publish(@event);
+                    _policyDescriptor.ExecutePolicy(@event, _dispatcher);
+                    //await _mediator.Publish(@event);
                     message.ProcessedAt = DateTime.UtcNow;
                     await _storage.UpdateStatusAsync(message, EventStatus.Succeeded);
                 }
