@@ -8,7 +8,7 @@
 	  <ImplicitUsings>enable</ImplicitUsings>
 	  <Nullable>enable</Nullable>
 	  <PackageId>Aethel.Framework.Atlantis</PackageId>
-	  <Version>2.2.0</Version>
+	  <Version>2.3.0</Version>
 	  <PackageTags>Domain Driven Design Framework; Modular Monoliths</PackageTags>
 	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	  <PackageIcon>atlantis.logo.png</PackageIcon>
@@ -18,7 +18,7 @@
 	  <NeutralLanguage>en</NeutralLanguage>
 	  <RepositoryType>dll</RepositoryType>
 	  <Summary>Framework para desarrollo enfocado en Domain Driven Design y Arquitectura Hexagonal implementando CQRS para facil uso y extensibilidad</Summary>
-	  <PackageReleaseNotes>Se mmmodifica el procesador de eventos de integracion para hacer uso de las politicas para eventos de integracion definidas en cada modulo</PackageReleaseNotes>
+	  <PackageReleaseNotes>Agregando el procesador de reacciones dentro del servidor de procesos en segundo plano</PackageReleaseNotes>
 	  <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
 

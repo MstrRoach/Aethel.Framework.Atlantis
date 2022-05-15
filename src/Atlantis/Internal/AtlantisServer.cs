@@ -1,4 +1,5 @@
 ﻿using Atlantis.Abstractions;
+using Atlantis.DomainEvents;
 using Atlantis.IntegrationEvents.Abstractions;
 using Atlantis.IntegrationEvents.Processor;
 using Atlantis.Processing;

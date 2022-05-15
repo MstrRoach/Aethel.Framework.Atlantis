@@ -1,5 +1,6 @@
 ﻿using Atlantis.Abstractions;
 using Atlantis.IntegrationEvents.Processor;
+using Atlantis.InternalCommands;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -38,18 +39,15 @@ namespace Atlantis.Processing
         public async Task ProcessAsync(ProcessingContext context)
         {
             _logger.LogInformation(
-                "Inicio de procesamiento para distribucion de eventos de Atlantis" + Environment.NewLine +
-                "==================================================================="
-                );
+                "# ----------- Inicio de procesamiento para distribucion de eventos de Atlantis ----------- #");
 
             await Task.WhenAll(
                 ProcessReceivedIntegrationEvents(context),
-                ProcessPublishedIntegrationEvents(context)
+                ProcessPublishedIntegrationEvents(context),
+                ProcessInternalCommands(context)
                 );
             _logger.LogInformation(
-                "Finalizando el procesamiento de eventos de Atlantis" + Environment.NewLine +
-                "==================================================================="
-                );
+                "# ----------- Finalizando el procesamiento de eventos de Atlantis ----------- #");
             await context.WaitAsync(_waitingInterval);
         }
 
@@ -85,5 +83,18 @@ namespace Atlantis.Processing
             await dispatch.Execute();
             await context.WaitAsync(_delay);
         }
+
+        private async Task ProcessInternalCommands(ProcessingContext context)
+        {
+            _logger.LogInformation("============= Procesando las reacciones no procesadas ==========");
+            context.ThrowIfStopping();
+            var dispatch = context.CreateScope()
+                .Provider
+                .GetRequiredService<InternalCommandProcessing>();
+            await dispatch.Execute();
+            await context.WaitAsync(_delay);
+            
+        }
+
     }
 }
